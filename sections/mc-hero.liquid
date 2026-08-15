@@ -1,0 +1,137 @@
+{% comment %}
+  Section : Bannière principale (hero) façon "Minute Curieuse"
+  À placer dans /sections/mc-hero.liquid
+{% endcomment %}
+
+<section class="mc-hero">
+  <div class="mc-hero__inner">
+    <div class="mc-hero__text">
+      <h1>
+        {{ section.settings.title_line1 | default: "LES OBJETS QUI" }}<br>
+        {{ section.settings.title_line2 | default: "DONNENT VIE À" }}<br>
+        <span class="mc-hero__accent">{{ section.settings.title_line3 | default: "L'HISTOIRE." }}</span>
+      </h1>
+      <p class="mc-hero__subtitle">
+        {{ section.settings.subtitle | default: "Objets fascinants, trésors cachés et pièces uniques inspirées des plus grandes histoires, des mystères et des explorations." }}
+      </p>
+      <a href="{{ section.settings.button_link | default: '#' }}" class="mc-hero__cta">
+        {{ section.settings.button_text | default: "DÉCOUVRIR LA BOUTIQUE" }}
+      </a>
+
+      {% if section.settings.show_social_proof %}
+      <div class="mc-hero__social">
+        <div class="mc-hero__avatars">
+          {% for i in (1..4) %}
+            <span class="mc-hero__avatar"></span>
+          {% endfor %}
+        </div>
+        <span class="mc-hero__stars">★★★★★</span>
+        <span class="mc-hero__proof-text">{{ section.settings.social_text | default: "+850 curieux nous font déjà confiance" }}</span>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mc-hero__image">
+      {% if section.settings.image %}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'eager' }}
+      {% else %}
+        <div class="mc-hero__placeholder">Ajoute une image dans les réglages de section</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .mc-hero {
+    background: #171310;
+    color: #f5ecd9;
+    padding: 60px 5vw;
+  }
+  .mc-hero__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .mc-hero h1 {
+    font-family: Georgia, 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.15;
+    margin: 0 0 20px;
+    font-weight: 700;
+  }
+  .mc-hero__accent { color: #d4a64a; }
+  .mc-hero__subtitle {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #d9cfc0;
+    max-width: 480px;
+    margin-bottom: 28px;
+  }
+  .mc-hero__cta {
+    display: inline-block;
+    background: #d4a64a;
+    color: #171310;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 14px 28px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-size: 13px;
+  }
+  .mc-hero__social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .mc-hero__avatars { display: flex; }
+  .mc-hero__avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #6b5a3f;
+    border: 2px solid #171310;
+    margin-left: -8px;
+  }
+  .mc-hero__avatar:first-child { margin-left: 0; }
+  .mc-hero__stars { color: #d4a64a; }
+  .mc-hero__proof-text { font-size: 13px; color: #b8ab94; }
+  .mc-hero__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+  }
+  .mc-hero__placeholder {
+    border: 1px dashed #6b5a3f;
+    padding: 60px 20px;
+    text-align: center;
+    color: #8a7a5c;
+  }
+  @media (max-width: 900px) {
+    .mc-hero__inner { grid-template-columns: 1fr; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "MC - Hero",
+  "settings": [
+    { "type": "text", "id": "title_line1", "label": "Titre ligne 1", "default": "LES OBJETS QUI" },
+    { "type": "text", "id": "title_line2", "label": "Titre ligne 2", "default": "DONNENT VIE À" },
+    { "type": "text", "id": "title_line3", "label": "Titre ligne 3 (accent doré)", "default": "L'HISTOIRE." },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre" },
+    { "type": "text", "id": "button_text", "label": "Texte du bouton", "default": "DÉCOUVRIR LA BOUTIQUE" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" },
+    { "type": "image_picker", "id": "image", "label": "Image principale" },
+    { "type": "checkbox", "id": "show_social_proof", "label": "Afficher la preuve sociale", "default": true },
+    { "type": "text", "id": "social_text", "label": "Texte preuve sociale", "default": "+850 curieux nous font déjà confiance" }
+  ],
+  "presets": [
+    { "name": "MC - Hero" }
+  ]
+}
+{% endschema %}
