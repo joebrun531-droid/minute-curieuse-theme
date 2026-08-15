@@ -1,0 +1,92 @@
+{% comment %}
+  Section : "Nos collections" avec vignettes rondes
+  À placer dans /sections/mc-collections-grid.liquid
+{% endcomment %}
+
+<section class="mc-collections">
+  <h2 class="mc-collections__title">{{ section.settings.heading | default: "Nos collections" }}</h2>
+  <div class="mc-collections__divider">★</div>
+
+  <div class="mc-collections__grid">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.link }}" class="mc-collection-item" {{ block.shopify_attributes }}>
+        <span class="mc-collection-item__circle">
+          {% if block.settings.image %}
+            {{ block.settings.image | image_url: width: 300 | image_tag: loading: 'lazy' }}
+          {% endif %}
+        </span>
+        <strong>{{ block.settings.title }}</strong>
+        <p>{{ block.settings.subtitle }}</p>
+      </a>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.button_link %}
+    <div class="mc-collections__cta-wrap">
+      <a href="{{ section.settings.button_link }}" class="mc-collections__cta">
+        {{ section.settings.button_text | default: "DÉCOUVRIR TOUTES LES COLLECTIONS" }} ›
+      </a>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  .mc-collections { background: #171310; color: #f5ecd9; padding: 60px 5vw; text-align: center; }
+  .mc-collections__title { font-family: Georgia, serif; font-size: 24px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .mc-collections__divider { color: #d4a64a; margin-bottom: 36px; }
+  .mc-collections__grid {
+    max-width: 1400px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px;
+  }
+  .mc-collection-item { text-decoration: none; color: #f5ecd9; }
+  .mc-collection-item__circle {
+    display: block; width: 130px; height: 130px; margin: 0 auto 14px;
+    border-radius: 50%; border: 1px solid #d4a64a; overflow: hidden; background: #1e1913;
+  }
+  .mc-collection-item__circle img { width: 100%; height: 100%; object-fit: cover; }
+  .mc-collection-item strong { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .mc-collection-item p { font-size: 12px; color: #a99b80; margin: 4px 0 0; }
+  .mc-collections__cta-wrap { margin-top: 36px; }
+  .mc-collections__cta {
+    display: inline-block; border: 1px solid #d4a64a; color: #f5ecd9;
+    text-decoration: none; padding: 12px 24px; font-size: 13px; letter-spacing: 0.06em;
+  }
+  @media (max-width: 900px) { .mc-collections__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .mc-collections__grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+{% schema %}
+{
+  "name": "MC - Grille de collections",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Titre", "default": "Nos collections" },
+    { "type": "text", "id": "button_text", "label": "Texte du bouton", "default": "DÉCOUVRIR TOUTES LES COLLECTIONS" },
+    { "type": "url", "id": "button_link", "label": "Lien du bouton" }
+  ],
+  "blocks": [
+    {
+      "type": "collection_item",
+      "name": "Collection",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Titre", "default": "Exploration" },
+        { "type": "text", "id": "subtitle", "label": "Sous-texte", "default": "Pour les découvreurs dans l'âme" },
+        { "type": "url", "id": "link", "label": "Lien" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "collection_item", "settings": { "title": "Exploration", "subtitle": "Pour les découvreurs dans l'âme" } },
+      { "type": "collection_item", "settings": { "title": "Navigation", "subtitle": "L'art de s'orienter et d'explorer" } },
+      { "type": "collection_item", "settings": { "title": "Trésors & Coffres", "subtitle": "Objets cachés et précieux" } },
+      { "type": "collection_item", "settings": { "title": "Pirates & Aventures", "subtitle": "L'univers des océans et des légendes" } },
+      { "type": "collection_item", "settings": { "title": "Écriture & Papeterie", "subtitle": "Des accessoires pour écrire l'histoire" } },
+      { "type": "collection_item", "settings": { "title": "Collection Vintage", "subtitle": "Des pièces uniques et intemporelles" } }
+    ]
+  },
+  "presets": [
+    { "name": "MC - Grille de collections" }
+  ]
+}
+{% endschema %}
